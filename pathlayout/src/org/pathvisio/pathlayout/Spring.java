@@ -23,13 +23,7 @@ public class Spring extends LayoutAbstract{
 		super.pwy = swingEngine.getEngine().getActivePathway();
 		createDSMultigraph();
 		l = new SpringLayout<String,String>( g );
-		Dimension d = new Dimension(800,600);
-		l.setSize(d);
-		
-		System.out.println("forceMultiplier: " + l.getForceMultiplier());
-		System.out.println("RepulsionRange: " + l.getRepulsionRange());
-		System.out.println("Stretch : " + l.getStretch());
-		
+		setDimension(l);
 		double fm = Double.parseDouble(PreferenceManager.getCurrent().get(PlPreference.PL_LAYOUT_SPRING_FORCE));
 		int rep = Integer.parseInt(PreferenceManager.getCurrent().get(PlPreference.PL_LAYOUT_SPRING_REPULSION));
 		double s = Double.parseDouble(PreferenceManager.getCurrent().get(PlPreference.PL_LAYOUT_SPRING_STRETCH));
@@ -39,7 +33,7 @@ public class Spring extends LayoutAbstract{
 		
 		
 		l.initialize();
-		for(int i=0;i<10000;i++){
+		for(int i=0;i<1000;i++){
 			l.step();
 		}
 		

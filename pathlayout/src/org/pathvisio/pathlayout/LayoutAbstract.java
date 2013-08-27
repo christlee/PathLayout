@@ -1,5 +1,6 @@
 package org.pathvisio.pathlayout;
 
+import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.util.List;
 
@@ -9,10 +10,12 @@ import org.pathvisio.core.model.PathwayElement;
 import org.pathvisio.gui.SwingEngine;
 
 import edu.uci.ics.jung.algorithms.layout.AbstractLayout;
+import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 import edu.uci.ics.jung.graph.Graph;
+import edu.uci.ics.jung.graph.SortedSparseMultigraph;
 
-public abstract class LayoutAbstract {
+public abstract class LayoutAbstract{
 	
 	Pathway pwy;
 	SwingEngine swingEngine;
@@ -22,26 +25,35 @@ public abstract class LayoutAbstract {
 		g = new DirectedSparseMultigraph<String, String>();
 		List<PathwayElement> elements = pwy.getDataObjects();
 		for (PathwayElement element : elements){
+			//first make sure each element has a unique graphId
+			try {
+				element.getGraphId().isEmpty();
+			}
+			catch (NullPointerException e){
+				element.setGraphId(pwy.getUniqueGraphId());
+			}
+			//then add nodes and edges with graphId as input string
 			if (element.getObjectType().equals(ObjectType.DATANODE)){
+				
 				g.addVertex(element.getGraphId());
-				Point2D point = new Point2D.Double();
-				point.setLocation(element.getMCenterX(),element.getMCenterY());
 			}
 			else if(element.getObjectType().equals(ObjectType.LINE)){
-				g.addEdge(element.getGraphId(),element.getStartGraphRef(), element.getEndGraphRef());
+				if (element.getMStart().isLinked()&&element.getMEnd().isLinked()){
+					g.addEdge(element.getGraphId(),element.getStartGraphRef(), element.getEndGraphRef());
+				}
+				
 			}
 		}
 	}
 	
-	
 	protected void drawNodes(AbstractLayout<String,String> l){
 		for (String v : l.getGraph().getVertices()){
-			l.transform(v);
-			double x = l.getX(v);
-			double y = l.getY(v);
+			Point2D point = l.transform(v);
+			double x = point.getX();
+			double y = point.getY();
 			PathwayElement e = pwy.getElementById(v);
-			x = x + .5 * e.getMWidth();
-			y = y + .5 * e.getMHeight();
+			x = x + e.getMWidth()/2;
+			y = y + e.getMHeight()/2;
 			e.setMCenterX(x);
 			e.setMCenterY(y);
 		}
@@ -52,6 +64,7 @@ public abstract class LayoutAbstract {
 			if (line.getObjectType().equals(ObjectType.LINE)){
 				PathwayElement startNode = pwy.getElementById(line.getStartGraphRef());
 				PathwayElement endNode = pwy.getElementById(line.getEndGraphRef());
+				
 				line.getMStart().unlink();
 				line.getMEnd().unlink();
 				double differenceX;
@@ -106,5 +119,16 @@ public abstract class LayoutAbstract {
 				line.getMStart().linkTo(startNode);
 				line.getMEnd().linkTo(endNode);
 			}
+	}
+	
+	protected void setDimension(Layout<String,String> l){
+		int i = 0;
+		for (PathwayElement node: pwy.getDataObjects()){
+			if (node.getObjectType().equals(ObjectType.DATANODE)){
+				i++;
+			}
+		}
+		Dimension d = new Dimension(i*20+40,i*15+30);
+		l.setSize(d);
 	}
 }
