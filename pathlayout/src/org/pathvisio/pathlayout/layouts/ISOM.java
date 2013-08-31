@@ -1,4 +1,4 @@
-package org.pathvisio.pathlayout;
+package org.pathvisio.pathlayout.layouts;
 
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
@@ -13,15 +13,14 @@ import org.pathvisio.pathlayout.PlPlugin.PlPreference;
 import edu.uci.ics.jung.algorithms.layout.AbstractLayout;
 import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
 
-public class ISOM extends LayoutAbstract{
+public class ISOM extends JungAbstract{
 
 	ISOMLayout<String,String> l; 
 	Transformer<String,Point2D> in;
 	
 	
-	ISOM(SwingEngine swingEngine){
-		super.swingEngine = swingEngine;
-		super.pwy = swingEngine.getEngine().getActivePathway();
+	public ISOM(SwingEngine swingEngine, boolean selection){
+		super(swingEngine,selection);
 		
 		createDSMultigraph();
 		l = new ISOMLayout<String,String>( g );

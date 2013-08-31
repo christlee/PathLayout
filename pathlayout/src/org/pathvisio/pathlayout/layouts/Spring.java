@@ -1,4 +1,4 @@
-package org.pathvisio.pathlayout;
+package org.pathvisio.pathlayout.layouts;
 
 import org.pathvisio.core.preferences.PreferenceManager;
 import org.pathvisio.gui.SwingEngine;
@@ -12,15 +12,14 @@ import java.awt.Dimension;
 import java.awt.geom.Point2D;
 
 
-public class Spring extends LayoutAbstract{
+public class Spring extends JungAbstract{
 
 	SpringLayout<String,String> l;
 	Transformer<String,Point2D> in;
 	
 	
-	Spring(SwingEngine swingEngine){
-		super.swingEngine = swingEngine;
-		super.pwy = swingEngine.getEngine().getActivePathway();
+	public Spring(SwingEngine swingEngine, boolean selection){
+		super(swingEngine,selection);
 		createDSMultigraph();
 		l = new SpringLayout<String,String>( g );
 		setDimension(l);

@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Pathlayout
-Bundle-SymbolicName: pathlayout
-Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.pathvisio.pathlayout
+Bundle-Version: 1.0.0
 Bundle-Activator: org.pathvisio.pathlayout.PlPlugin
 Import-Package: com.jgoodies.forms.layout,
  org.osgi.framework;version="1.3.0",
@@ -14,9 +14,11 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.pathvisio.core;bundle-version="3.0.0",
  org.pathvisio.desktop;bundle-version="3.0.0",
  org.pathvisio.gui;bundle-version="3.0.0"
+Export-Package: org.pathvisio.pathlayout
 Bundle-ClassPath: lib/,
  lib/jung-algorithms-2.0.1.jar,
  lib/jung-graph-impl-2.0.1.jar,
  lib/collections-generic-4.01.jar,
  lib/jung-api-2.0.1.jar,
+ lib/prefuse.jar,
  .

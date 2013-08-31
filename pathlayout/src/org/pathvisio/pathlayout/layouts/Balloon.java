@@ -1,4 +1,4 @@
-package org.pathvisio.pathlayout;
+package org.pathvisio.pathlayout.layouts;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -27,14 +27,13 @@ import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.Forest;
 import edu.uci.ics.jung.graph.event.GraphEvent.Vertex;
 
-public class Balloon extends LayoutAbstract{
+public class Balloon extends JungAbstract{
 
 	BalloonLayout<String,String> l; 
 	Transformer<String,Point2D> in;
 	
-	Balloon(SwingEngine swingEngine){
-		super.swingEngine = swingEngine;
-		super.pwy = swingEngine.getEngine().getActivePathway();
+	public Balloon(SwingEngine swingEngine, boolean selection){
+		super(swingEngine,selection);
 		
 		
 		createDSMultigraph();

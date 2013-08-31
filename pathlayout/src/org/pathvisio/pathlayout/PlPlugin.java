@@ -15,6 +15,12 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.pathvisio.desktop.PvDesktop;
 import org.pathvisio.desktop.plugin.Plugin;
+import org.pathvisio.pathlayout.layouts.Balloon;
+import org.pathvisio.pathlayout.layouts.FruchtRein;
+import org.pathvisio.pathlayout.layouts.ISOM;
+import org.pathvisio.pathlayout.layouts.KamKaw;
+import org.pathvisio.pathlayout.layouts.Prefuse;
+import org.pathvisio.pathlayout.layouts.Spring;
 
 public class PlPlugin implements Plugin, BundleActivator {
 
@@ -25,6 +31,7 @@ public class PlPlugin implements Plugin, BundleActivator {
 	private static String BALLAYOUT = "BalloonLayout";
 	private static String ISOMLAYOUT = "ISOMLayout";
 	private static String PREF = "Preferences";
+	private static String PREFUSE = "prefuse";
 	
 	
 	public static enum Action
@@ -34,7 +41,8 @@ public class PlPlugin implements Plugin, BundleActivator {
 		SPRING,
 		ISOM,
 		BAL,
-		PREF;
+		PREF,
+		PREFUSE;
 	}
 	
 	private selectAction springAction;
@@ -43,6 +51,7 @@ public class PlPlugin implements Plugin, BundleActivator {
 	private selectAction ISOMAction;
 	private selectAction prefAction;
 	private selectAction BalAction;
+	private selectAction prefuse;
 	private PvDesktop desktop;
 	private JMenu subMenu;
 	private static BundleContext context;
@@ -57,6 +66,7 @@ public class PlPlugin implements Plugin, BundleActivator {
 		ISOMAction = new selectAction(Action.ISOM);
 		BalAction = new selectAction(Action.BAL);
 		prefAction = new selectAction(Action.PREF);
+		prefuse = new selectAction(Action.PREFUSE);
 		JMenuItem prefMenu = new JMenuItem(PREF);
 		prefMenu.addActionListener(prefAction);
 		prefMenu.add(new JSeparator());
@@ -68,6 +78,7 @@ public class PlPlugin implements Plugin, BundleActivator {
 		subMenu.add(kkAction);
 		subMenu.add(ISOMAction);
 		subMenu.add(BalAction);
+		subMenu.add(prefuse);
 		subMenu.add(prefMenu);
 		desktop.registerSubMenu("Plugins", subMenu);
 		
@@ -99,6 +110,9 @@ public class PlPlugin implements Plugin, BundleActivator {
 			case PREF:
 				putValue(NAME,PREF);
 				break;
+			case PREFUSE:
+				putValue(NAME,PREFUSE);
+				break;
 			}
 			
 		}
@@ -108,22 +122,25 @@ public class PlPlugin implements Plugin, BundleActivator {
 			switch(action)
 			{
 			case FR:
-				new FruchtRein(desktop.getSwingEngine());
+				new FruchtRein(desktop.getSwingEngine(),false);
 				break;
 			case SPRING:
-				new Spring(desktop.getSwingEngine());
+				new Spring(desktop.getSwingEngine(),false);
 				break;
 			case KK:
-				new KamKaw(desktop.getSwingEngine());
+				new KamKaw(desktop.getSwingEngine(),false);
 				break;
 			case ISOM:
-				new ISOM(desktop.getSwingEngine());
+				new ISOM(desktop.getSwingEngine(),false);
 				break;
 			case BAL:
-				new Balloon(desktop.getSwingEngine());
+				new Balloon(desktop.getSwingEngine(),false);
 				break;
 			case PREF:
 				preferenceWindow();
+				break;
+			case PREFUSE:
+				new Prefuse(desktop.getSwingEngine(),false);
 				break;
 			}
 		}

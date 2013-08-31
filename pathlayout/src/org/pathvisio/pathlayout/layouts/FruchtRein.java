@@ -1,4 +1,4 @@
-package org.pathvisio.pathlayout;
+package org.pathvisio.pathlayout.layouts;
 
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
@@ -14,15 +14,14 @@ import edu.uci.ics.jung.algorithms.layout.AbstractLayout;
 import edu.uci.ics.jung.algorithms.layout.FRLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
 
-public class FruchtRein extends LayoutAbstract{
+public class FruchtRein extends JungAbstract{
 
 	FRLayout<String,String> l; 
 	Transformer<String,Point2D> in;
 	
 	
-	FruchtRein(SwingEngine swingEngine){
-		super.swingEngine = swingEngine;
-		super.pwy = swingEngine.getEngine().getActivePathway();
+	public FruchtRein(SwingEngine swingEngine, boolean selection){
+		super(swingEngine,selection);
 		
 		createDSMultigraph();
 		l = new FRLayout<String,String>( g );

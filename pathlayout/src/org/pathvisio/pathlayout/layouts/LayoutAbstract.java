@@ -1,61 +1,111 @@
-package org.pathvisio.pathlayout;
+package org.pathvisio.pathlayout.layouts;
 
-import java.awt.Dimension;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.pathvisio.core.model.ObjectType;
 import org.pathvisio.core.model.Pathway;
 import org.pathvisio.core.model.PathwayElement;
+import org.pathvisio.core.view.Graphics;
 import org.pathvisio.gui.SwingEngine;
 
-import edu.uci.ics.jung.algorithms.layout.AbstractLayout;
-import edu.uci.ics.jung.algorithms.layout.Layout;
-import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
-import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.SortedSparseMultigraph;
-
-public abstract class LayoutAbstract{
-	
+public abstract class LayoutAbstract {
+	public static String NAME;
+	public static String DESCRIPTION;
 	Pathway pwy;
 	SwingEngine swingEngine;
-	Graph<String,String> g;
+	boolean selection;
+	List<PathwayElement> pwyNodes;
+	List<PathwayElement> pwyLines;
 	
-	protected void createDSMultigraph(){
-		g = new DirectedSparseMultigraph<String, String>();
-		List<PathwayElement> elements = pwy.getDataObjects();
-		for (PathwayElement element : elements){
-			//first make sure each element has a unique graphId
+	LayoutAbstract(SwingEngine se){
+		this(se,false);
+	}
+	LayoutAbstract(SwingEngine se,boolean selection){
+		this.pwy = se.getEngine().getActivePathway();
+		this.swingEngine = se;
+		this.selection = selection;
+		pwyNodes = new ArrayList<PathwayElement>();
+		pwyLines = new ArrayList<PathwayElement>();
+		if (selection){
+			List<Graphics> graphics = swingEngine.getEngine().getActiveVPathway().getSelectedGraphics();
+			for (Graphics g : graphics){
+				PathwayElement pe = g.getPathwayElement();
+				if (pe.getObjectType().equals(ObjectType.DATANODE)){
+					pwyNodes.add(pe);
+				}
+				else if (pe.getObjectType().equals(ObjectType.LINE)){
+					pwyLines.add(pe);
+				}
+			}
+		}
+		else {
+			for (PathwayElement pe : pwy.getDataObjects()){
+				if (pe.getObjectType().equals(ObjectType.DATANODE)){
+					pwyNodes.add(pe);
+				}
+				else if (pe.getObjectType().equals(ObjectType.LINE)){
+					pwyLines.add(pe);
+				}
+			}
+		}
+		for (PathwayElement pe : pwyNodes){
+			//Make sure each element has a unique graphId
 			try {
-				element.getGraphId().isEmpty();
+				pe.getGraphId().isEmpty();
 			}
 			catch (NullPointerException e){
-				element.setGraphId(pwy.getUniqueGraphId());
-			}
-			//then add nodes and edges with graphId as input string
-			if (element.getObjectType().equals(ObjectType.DATANODE)){
-				
-				g.addVertex(element.getGraphId());
-			}
-			else if(element.getObjectType().equals(ObjectType.LINE)){
-				if (element.getMStart().isLinked()&&element.getMEnd().isLinked()){
-					g.addEdge(element.getGraphId(),element.getStartGraphRef(), element.getEndGraphRef());
-				}
-				
+				pe.setGraphId(pwy.getUniqueGraphId());
 			}
 		}
 	}
 	
-	protected void drawNodes(AbstractLayout<String,String> l){
-		for (String v : l.getGraph().getVertices()){
-			Point2D point = l.transform(v);
-			double x = point.getX();
-			double y = point.getY();
-			PathwayElement e = pwy.getElementById(v);
-			x = x + e.getMWidth()/2;
-			y = y + e.getMHeight()/2;
-			e.setMCenterX(x);
-			e.setMCenterY(y);
+	protected void setLocations(Map<String,Point2D> points){
+		double plusx = 0;
+		if (selection){
+			// if it's the layout of a selection, first put the selection to 0, then put them on the right side of the other Pathway Elements
+			for (PathwayElement pe: pwyNodes){
+				pe.setMCenterX(0);
+			}
+			plusx = swingEngine.getEngine().getActiveVPathway().getVWidth();
+		}
+		double minx = 0;
+		double miny = 0;
+		boolean first = true;
+		for (Entry<String,Point2D> e : points.entrySet()){
+			double x = e.getValue().getX();
+			double y = e.getValue().getY();
+			if (first){
+				minx = x;
+				miny = y;
+				first = false;
+			}
+			else {
+				if (x<minx){
+					minx = x;
+				}
+				if (y<miny){
+					miny = y;
+				}
+			}
+		}
+		for (Entry<String,Point2D> e : points.entrySet()){
+			PathwayElement pe = pwy.getElementById(e.getKey());
+			if (minx<0){
+				pe.setMCenterX(e.getValue().getX()+Math.abs(minx)+pe.getMWidth()/2+plusx);
+			}
+			else {
+				pe.setMCenterX(e.getValue().getX()-minx+pe.getMWidth()/2+plusx);
+			}
+			if (miny<0){
+				pe.setMCenterY(e.getValue().getY()+Math.abs(miny)+pe.getMHeight()/2);
+			}
+			else {
+				pe.setMCenterY(e.getValue().getY()-Math.abs(miny)+pe.getMHeight()/2);
+			}
 		}
 	}
 	
@@ -119,16 +169,5 @@ public abstract class LayoutAbstract{
 				line.getMStart().linkTo(startNode);
 				line.getMEnd().linkTo(endNode);
 			}
-	}
-	
-	protected void setDimension(Layout<String,String> l){
-		int i = 0;
-		for (PathwayElement node: pwy.getDataObjects()){
-			if (node.getObjectType().equals(ObjectType.DATANODE)){
-				i++;
-			}
-		}
-		Dimension d = new Dimension(i*20+40,i*15+30);
-		l.setSize(d);
 	}
 }
