@@ -4,22 +4,14 @@ import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.pathvisio.core.model.ObjectType;
-import org.pathvisio.core.model.Pathway;
 import org.pathvisio.core.model.PathwayElement;
 import org.pathvisio.gui.SwingEngine;
-
-import prefuse.Visualization;
 import prefuse.action.layout.graph.ForceDirectedLayout;
-import prefuse.data.Node;
-import prefuse.data.tuple.TableNode;
 import prefuse.util.force.DragForce;
 import prefuse.util.force.ForceItem;
 import prefuse.util.force.ForceSimulator;
 import prefuse.util.force.NBodyForce;
 import prefuse.util.force.SpringForce;
-import prefuse.visual.VisualItem;
 
 public class Prefuse extends LayoutAbstract{
 	

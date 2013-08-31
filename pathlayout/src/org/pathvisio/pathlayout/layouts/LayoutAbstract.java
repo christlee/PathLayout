@@ -10,12 +10,14 @@ import org.pathvisio.core.model.ObjectType;
 import org.pathvisio.core.model.Pathway;
 import org.pathvisio.core.model.PathwayElement;
 import org.pathvisio.core.view.Graphics;
+import org.pathvisio.core.view.VPathway;
 import org.pathvisio.gui.SwingEngine;
 
 public abstract class LayoutAbstract {
 	public static String NAME;
 	public static String DESCRIPTION;
 	Pathway pwy;
+	VPathway vpwy;
 	SwingEngine swingEngine;
 	boolean selection;
 	List<PathwayElement> pwyNodes;
@@ -26,12 +28,13 @@ public abstract class LayoutAbstract {
 	}
 	LayoutAbstract(SwingEngine se,boolean selection){
 		this.pwy = se.getEngine().getActivePathway();
+		this.vpwy = se.getEngine().getActiveVPathway();
 		this.swingEngine = se;
 		this.selection = selection;
 		pwyNodes = new ArrayList<PathwayElement>();
 		pwyLines = new ArrayList<PathwayElement>();
 		if (selection){
-			List<Graphics> graphics = swingEngine.getEngine().getActiveVPathway().getSelectedGraphics();
+			List<Graphics> graphics = vpwy.getSelectedGraphics();
 			for (Graphics g : graphics){
 				PathwayElement pe = g.getPathwayElement();
 				if (pe.getObjectType().equals(ObjectType.DATANODE)){
@@ -70,7 +73,7 @@ public abstract class LayoutAbstract {
 			for (PathwayElement pe: pwyNodes){
 				pe.setMCenterX(0);
 			}
-			plusx = swingEngine.getEngine().getActiveVPathway().getVWidth();
+			plusx = vpwy.getVWidth()/vpwy.getZoomFactor();
 		}
 		double minx = 0;
 		double miny = 0;

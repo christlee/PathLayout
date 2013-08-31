@@ -2,13 +2,10 @@ package org.pathvisio.pathlayout.layouts;
 
 import org.pathvisio.core.preferences.PreferenceManager;
 import org.pathvisio.gui.SwingEngine;
-import org.pathvisio.pathlayout.PlPlugin.PlPreference;
+import org.pathvisio.pathlayout.LayoutManager.PlPreference;
 import org.apache.commons.collections15.Transformer;
-
 import edu.uci.ics.jung.algorithms.layout.AbstractLayout;
 import edu.uci.ics.jung.algorithms.layout.SpringLayout;
-
-import java.awt.Dimension;
 import java.awt.geom.Point2D;
 
 

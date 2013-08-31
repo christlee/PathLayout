@@ -1,5 +1,6 @@
 package org.pathvisio.pathlayout;
 
+import org.pathvisio.core.preferences.Preference;
 import org.pathvisio.gui.SwingEngine;
 import org.pathvisio.pathlayout.layouts.*;
 
@@ -29,11 +30,9 @@ public class LayoutManager {
 		public String toString() {
 			return name;
 		}
-		
 		public String getDescription(){
 			return desc;
 		}
-		
 		public String getSource(){
 			return src;
 		}
@@ -61,14 +60,20 @@ public class LayoutManager {
 		}
 	
 	}
-	
-	private SwingEngine se;
-	
-	public LayoutManager(SwingEngine se){
-		this.se = se;
-	}
-	
-	public void doLayout(Layout l){
+	public static enum PlPreference implements Preference
+	{
+		PL_LAYOUT_FR_ATTRACTION("0.5"),
+		PL_LAYOUT_FR_REPULSION("1"),
+		PL_LAYOUT_SPRING_FORCE("0.33"),
+		PL_LAYOUT_SPRING_REPULSION("100"),
+		PL_LAYOUT_SPRING_STRETCH("0.7");
 		
+	
+		private final String defaultVal;
+		
+		PlPreference (String _defaultVal) { defaultVal = _defaultVal; }
+		
+		@Override
+		public String getDefault() { return defaultVal; }
 	}
 }

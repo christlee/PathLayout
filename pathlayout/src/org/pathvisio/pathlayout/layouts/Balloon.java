@@ -1,31 +1,17 @@
 package org.pathvisio.pathlayout.layouts;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.commons.collections15.Transformer;
 import org.pathvisio.core.model.ObjectType;
 import org.pathvisio.core.model.PathwayElement;
-import org.pathvisio.core.preferences.PreferenceManager;
 import org.pathvisio.gui.SwingEngine;
-import org.pathvisio.pathlayout.PlPlugin.PlPreference;
 
-import edu.uci.ics.jung.algorithms.layout.AbstractLayout;
 import edu.uci.ics.jung.algorithms.layout.BalloonLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
-import edu.uci.ics.jung.algorithms.layout.TreeLayout;
 import edu.uci.ics.jung.graph.DelegateForest;
-import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.Forest;
-import edu.uci.ics.jung.graph.event.GraphEvent.Vertex;
 
 public class Balloon extends JungAbstract{
 

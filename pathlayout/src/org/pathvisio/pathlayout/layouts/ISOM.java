@@ -1,15 +1,8 @@
 package org.pathvisio.pathlayout.layouts;
 
-import java.awt.Dimension;
 import java.awt.geom.Point2D;
-
 import org.apache.commons.collections15.Transformer;
-import org.pathvisio.core.model.ObjectType;
-import org.pathvisio.core.model.PathwayElement;
-import org.pathvisio.core.preferences.PreferenceManager;
 import org.pathvisio.gui.SwingEngine;
-import org.pathvisio.pathlayout.PlPlugin.PlPreference;
-
 import edu.uci.ics.jung.algorithms.layout.AbstractLayout;
 import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
 
