@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * pathlayout,
+ * 
+ * a library for PathVisio plug-ins with layout algorithms
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
 package org.pathvisio.pathlayout.layouts;
 
 import java.awt.geom.Point2D;
@@ -13,11 +30,22 @@ import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.graph.DelegateForest;
 import edu.uci.ics.jung.graph.Forest;
 
+// TODO: try to avoid adding all nodes on a circle
+/**
+ * Balloon class</p>
+ * Class for using the balloon layout algorithm in PathVisio.
+ * @author Christ Leemans
+ *
+ */
 public class Balloon extends JungAbstract{
 
 	BalloonLayout<String,String> l; 
 	Transformer<String,Point2D> in;
-	
+	/**
+	 * create a new Balloon layout.
+	 * @param se The PathVisio swing engine
+	 * @param selection Boolean whether to use currently selected nodes or complete pathway
+	 */
 	public Balloon(SwingEngine swingEngine, boolean selection){
 		super(swingEngine,selection);
 		
@@ -25,32 +53,6 @@ public class Balloon extends JungAbstract{
 		createDSMultigraph();
 		Forest<String,String> forest = new DelegateForest<String,String>();
 		List<PathwayElement> elements = pwy.getDataObjects();
-//		List<PathwayElement> lines = new ArrayList<PathwayElement>();
-//		for (PathwayElement element : elements){
-//			if (element.getObjectType().equals(ObjectType.LINE)){
-//				lines.add(element);
-//			}
-//		}
-//		List<PathwayElement> newLines = new ArrayList<PathwayElement>();
-//		newLines.addAll(lines);
-//		PathwayElement firstline;
-//		while(!newLines.isEmpty()){
-//			firstline = newLines.get(0);
-//			String startgr = firstline.getStartGraphRef();
-//			String endgr = firstline.getEndGraphRef();
-//			forest.addVertex(startgr);
-//			forest.addEdge(firstline.getGraphId(),startgr,endgr);
-//			newLines.remove(firstline);
-//		
-//			for (int i = 1; i<lines.size();i++){
-//				PathwayElement line = lines.get(i);
-//				if (forest.containsVertex(line.getStartGraphRef()) ||
-//						forest.containsVertex(line.getEndGraphRef())){
-//					forest.addEdge(line.getGraphId(),line.getStartGraphRef(),line.getEndGraphRef());
-//					newLines.remove(line);
-//				}
-//			}
-//		}
 		
 		
 		for (PathwayElement element : elements){
@@ -76,15 +78,6 @@ public class Balloon extends JungAbstract{
 				l.setLocation(element.getGraphId(), p);
 			}
 		}
-//		Transformer<String,Point2D> init = new Transformer<String,Point2D>(){
-//		    public Point2D transform(String vertex){
-//		    	PathwayElement node = pwy.getElementById(String);
-//		    	Point2D point = new Point2D.Double(node.getMCenterX(),node.getMCenterY());
-//		    	return point;
-//	 	    }
-//	 	};
-//	 	l.setGraph(forest);
-//		l.setInitializer(init);
 		l.initialize();
 	 	
 		for (String v : l.getGraph().getVertices()){

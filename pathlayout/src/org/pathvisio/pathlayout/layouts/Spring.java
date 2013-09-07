@@ -1,19 +1,43 @@
+/*******************************************************************************
+ * pathlayout,
+ * 
+ * a library for PathVisio plug-ins with layout algorithms
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
 package org.pathvisio.pathlayout.layouts;
 
 import org.pathvisio.core.preferences.PreferenceManager;
 import org.pathvisio.gui.SwingEngine;
 import org.pathvisio.pathlayout.LayoutManager.PlPreference;
-import org.apache.commons.collections15.Transformer;
 import edu.uci.ics.jung.algorithms.layout.AbstractLayout;
 import edu.uci.ics.jung.algorithms.layout.SpringLayout;
-import java.awt.geom.Point2D;
-
+/**
+ * Spring class</p>
+ * Class for using a simple force-directed spring-embedder in PathVisio.
+ * @author Christ Leemans
+ *
+ */
 
 public class Spring extends JungAbstract{
 
 	SpringLayout<String,String> l;
-	Transformer<String,Point2D> in;
 	
+	/**
+	 * create a new Spring Layout.
+	 * @param se The PathVisio swing engine
+	 * @param selection Boolean whether to use currently selected nodes or complete pathway
+	 */
 	
 	public Spring(SwingEngine swingEngine, boolean selection){
 		super(swingEngine,selection);
