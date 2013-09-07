@@ -30,6 +30,12 @@ import prefuse.util.force.ForceSimulator;
 import prefuse.util.force.NBodyForce;
 import prefuse.util.force.SpringForce;
 
+/**
+ * Prefuse Class<p>
+ * Implements the Force-Directed layout algorithm from the Prefuse package.
+ * @author Christ Leemans
+ *
+ */
 public class Prefuse extends LayoutAbstract{
 	
 	public int numIterations = 100;
@@ -38,6 +44,11 @@ public class Prefuse extends LayoutAbstract{
 	public double defaultNodeMass = 3.0;
 	public boolean isDeterministic;
 
+	/**
+	 * create a new prefuse Force-Directed Layout.
+	 * @param swingEngine The PathVisio swing engine
+	 * @param selection Boolean whether to use currently selected nodes or complete pathway
+	 */
 	public Prefuse(SwingEngine swingEngine, boolean selection){
 		super(swingEngine,selection);
 		ForceDirectedLayout l = new ForceDirectedLayout("Layout");
@@ -76,9 +87,15 @@ public class Prefuse extends LayoutAbstract{
 		drawLines();
 	}
 	
-	public static float pythagoras(double d, double e){
+	/**
+	 * calculate the length of the hypotenuse
+	 * @param a length of side a
+	 * @param b length of side b
+	 * @return length of the hypotenuse
+	 */
+	public static float pythagoras(double a, double b){
 		
-		return (float)Math.sqrt(Math.pow(d,2) + Math.pow(e, 2));
+		return (float)Math.sqrt(Math.pow(a,2) + Math.pow(b, 2));
 	}
 
 }
