@@ -17,11 +17,12 @@
 			<include name="org.eclipse.osgi.jar" />
 		</fileset>
 		<fileset dir="./lib">
-			<include name = "jung-algorithms-2.0.1.jar" />
-			<include name = "jung-graph-impl-2.0.1.jar" />
-			<include name = "collections-generic-4.01.jar" />
-			<include name = "jung-api-2.0.1.jar"/>
 			<include name = "prefuse.jar"/>
+			<include name = "jung-algorithms-2.0.1.jar"/>
+			<include name = "jung-graph-impl-2.0.1.jar"/>
+			<include name = "collections-generic-4.01.jar"/>
+			<include name = "jung-api-2.0.1.jar"/>
+			<include name = "org.pathvisio.pathlayout-1.0.0.jar"/>
 		</fileset>	
 	</path>
 
@@ -34,15 +35,6 @@
 				</not>
 			</condition>
 		</fail>
-		<copy toDir="build/lib">
-			<fileset dir="./lib">
-				<include name = "jung-algorithms-2.0.1.jar" />
-				<include name = "jung-graph-impl-2.0.1.jar" />
-				<include name = "collections-generic-4.01.jar" />
-				<include name = "jung-api-2.0.1.jar"/>
-				<include name = "prefuse.jar"/>
-			</fileset>
-		</copy>
 	</target>
 	
 	<target name="build" depends="prepare">
