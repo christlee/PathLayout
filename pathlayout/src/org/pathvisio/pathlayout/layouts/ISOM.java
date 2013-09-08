@@ -32,7 +32,7 @@ public class ISOM extends JungAbstract{
 	
 	/**
 	 * create a new Meyer's Self-Organizing Map Layout.
-	 * @param se The PathVisio swing engine
+	 * @param swingEngine The PathVisio swing engine
 	 * @param selection Boolean whether to use currently selected nodes or complete pathway
 	 */
 	public ISOM(SwingEngine swingEngine, boolean selection){

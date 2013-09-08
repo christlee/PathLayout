@@ -43,7 +43,7 @@ public class Balloon extends JungAbstract{
 	Transformer<String,Point2D> in;
 	/**
 	 * create a new Balloon layout.
-	 * @param se The PathVisio swing engine
+	 * @param swingEngine The PathVisio swing engine
 	 * @param selection Boolean whether to use currently selected nodes or complete pathway
 	 */
 	public Balloon(SwingEngine swingEngine, boolean selection){

@@ -35,7 +35,7 @@ public class Spring extends JungAbstract{
 	
 	/**
 	 * create a new Spring Layout.
-	 * @param se The PathVisio swing engine
+	 * @param swingEngine The PathVisio swing engine
 	 * @param selection Boolean whether to use currently selected nodes or complete pathway
 	 */
 	

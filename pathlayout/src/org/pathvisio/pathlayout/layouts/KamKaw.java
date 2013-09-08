@@ -37,7 +37,7 @@ public class KamKaw extends JungAbstract{
 	
 	/**
 	 * create a new Kamada-Kawai Layout
-	 * @param se The PathVisio swing engine
+	 * @param swingEngine The PathVisio swing engine
 	 * @param selection Boolean whether to use currently selected nodes or complete pathway
 	 */
 	public KamKaw(SwingEngine swingEngine, boolean selection){

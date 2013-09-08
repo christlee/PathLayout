@@ -38,7 +38,7 @@ public class FruchtRein extends JungAbstract{
 	
 	/**
 	 * create a new Fruchterman-Reingold layout.
-	 * @param se The PathVisio swing engine
+	 * @param swingEngine The PathVisio swing engine
 	 * @param selection Boolean whether to use currently selected nodes or complete pathway
 	 */
 	public FruchtRein(SwingEngine swingEngine, boolean selection){
