@@ -31,6 +31,8 @@ public class LayoutManager {
 	/**
 	 * enumerator containing the layout algorithms that can be chosen. Contains a method to
 	 * create new layout objects as well.
+	 * 
+	 * @author Christ Leemans
 	 */
 	public static enum Layout {
 		BALLOON("Balloon","A Layout implementation that assigns positions to vertices using associations with nested circles.","JUNG2.0"),
@@ -104,6 +106,8 @@ public class LayoutManager {
 	}
 	/**
 	 * enumerator with the preferences used in layout algorithms
+	 * 
+	 * @author Christ Leemans
 	 */
 	public static enum PlPreference implements Preference
 	{
